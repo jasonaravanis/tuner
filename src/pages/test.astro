@@ -1,7 +1,8 @@
 ---
-import { MyReactComponent } from "../components/MyReactComponent";
+import { Tuner } from "../components/tuner";
+import Layout from "../layouts/Layout.astro";
 ---
 
-<div>
-  <MyReactComponent client:load />
-</div>
+<Layout title="test">
+  <Tuner client:only="react" />
+</Layout>
