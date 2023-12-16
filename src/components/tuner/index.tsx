@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Canvas } from "../canvas";
 
 const CANVAS = {
@@ -12,8 +12,7 @@ export const Tuner = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameRef = useRef<number>(0);
 
-  const startTuner = async () => {
-    setIsTunerOn(true);
+  const startTuner = useCallback(async () => {
     setError(null);
     const isSupportedBrowser = Boolean(navigator.mediaDevices.getUserMedia);
     if (!isSupportedBrowser) {
@@ -39,52 +38,64 @@ export const Tuner = () => {
       throw new Error("Failed to get canvas context");
     }
     try {
-      // analyseSound(mediaStream, canvasContext);
+      const audioContext = new window.AudioContext();
+      const source = audioContext.createMediaStreamSource(mediaStream);
+      const analyser = audioContext.createAnalyser();
+      source.connect(analyser);
+      analyseSound(analyser, canvasContext);
     } catch {
       setError("Something went wrong!");
     }
-  };
+  }, []);
 
-  // const analyseSound = (stream: MediaStream, ctx: CanvasRenderingContext2D) => {
-  //   const audioContext = new window.AudioContext();
-  //   const source = audioContext.createMediaStreamSource(stream);
-  //   const analyser = audioContext.createAnalyser();
-  //   const bufferLength = analyser.fftSize;
-  //   const buffer = new Float32Array(bufferLength);
-  // };
-
-  const startAnimation = () => {
-    if (!canvasRef.current) {
-      throw new Error("Canvas DOM element is not assigned to reference");
-    }
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) {
-      throw new Error("Failed to get canvas context");
-    }
+  const analyseSound = (
+    analyser: AnalyserNode,
+    ctx: CanvasRenderingContext2D
+  ) => {
+    const { width, height } = CANVAS;
+    const bufferLength = analyser.fftSize;
+    const buffer = new Uint8Array(bufferLength);
 
     const animate = () => {
-      const { width, height } = CANVAS;
-      const r = Math.floor(Math.random() * 256);
-      const g = Math.floor(Math.random() * 256);
-      const b = Math.floor(Math.random() * 256);
+      ctx.fillStyle = "rgb(200,100,100";
 
-      ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
       ctx.fillRect(0, 0, width, height);
+      analyser.getByteTimeDomainData(buffer);
+
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "rgb(0, 0, 0)";
+      ctx.beginPath();
+
+      let sliceWidth = (width * 1.0) / bufferLength;
+      let x = 0;
+
+      for (let i = 0; i < bufferLength; i++) {
+        let v = buffer[i] / 128.0;
+        let y = (v * height) / 2;
+
+        if (i === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+
+        x += sliceWidth;
+      }
+      ctx.lineTo(width, height / 2);
+      ctx.stroke();
       animationFrameRef.current = requestAnimationFrame(animate);
     };
-
     animate();
   };
 
   useEffect(() => {
     if (isTunerOn) {
-      startAnimation();
+      startTuner();
     }
     return () => {
       cancelAnimationFrame(animationFrameRef.current);
     };
-  }, [isTunerOn]);
+  }, [isTunerOn, startTuner]);
 
   return (
     <>
