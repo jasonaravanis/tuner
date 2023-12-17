@@ -42,13 +42,13 @@ export const Tuner = () => {
       const source = audioContext.createMediaStreamSource(mediaStream);
       const analyser = audioContext.createAnalyser();
       source.connect(analyser);
-      analyseSound(analyser, canvasContext);
+      animateCanvas(analyser, canvasContext);
     } catch {
       setError("Something went wrong!");
     }
   }, []);
 
-  const analyseSound = (
+  const animateCanvas = (
     analyser: AnalyserNode,
     ctx: CanvasRenderingContext2D
   ) => {
@@ -56,7 +56,7 @@ export const Tuner = () => {
     const bufferLength = analyser.fftSize;
     const buffer = new Float32Array(bufferLength);
 
-    const animate = () => {
+    const generateAnimationFrame = () => {
       ctx.fillStyle = "rgb(200,100,100";
 
       ctx.fillRect(0, 0, width, height);
@@ -89,9 +89,9 @@ export const Tuner = () => {
       }
       ctx.lineTo(width, height / 2);
       ctx.stroke();
-      animationFrameRef.current = requestAnimationFrame(animate);
+      animationFrameRef.current = requestAnimationFrame(generateAnimationFrame);
     };
-    animate();
+    generateAnimationFrame();
   };
 
   useEffect(() => {
