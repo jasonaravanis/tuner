@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Canvas } from "../canvas";
+import { autoCorrelate } from "./autoCorrelate";
 
 const CANVAS = {
   width: 600,
@@ -42,53 +43,43 @@ export const Tuner = () => {
       const source = audioContext.createMediaStreamSource(mediaStream);
       const analyser = audioContext.createAnalyser();
       source.connect(analyser);
-      animateCanvas(analyser, canvasContext);
+      analyseSound(analyser, canvasContext, audioContext.sampleRate);
     } catch {
       setError("Something went wrong!");
     }
   }, []);
 
-  const animateCanvas = (
+  const analyseSound = (
     analyser: AnalyserNode,
-    ctx: CanvasRenderingContext2D
+    ctx: CanvasRenderingContext2D,
+    sampleRate: number
   ) => {
     const { width, height } = CANVAS;
     const bufferLength = analyser.fftSize;
     const buffer = new Float32Array(bufferLength);
 
     const generateAnimationFrame = () => {
-      ctx.fillStyle = "rgb(200,100,100";
-
-      ctx.fillRect(0, 0, width, height);
       analyser.getFloatTimeDomainData(buffer);
 
+      // Paint the canvas
+      ctx.fillStyle = "rgb(200,100,100";
+      ctx.fillRect(0, 0, width, height);
       ctx.lineWidth = 2;
       ctx.strokeStyle = "rgb(0, 0, 0)";
       ctx.beginPath();
-
       let sliceWidth = (width * 1.0) / bufferLength;
       let x = 0;
-
-      /*
-      buffer array contains time-series array of floats from -1 to 1. Each float represents magnitude of sound at a given point in time.
-      Assuming you have a microphone with a sample rate of 48,000Hz, a 'given point in time' is approx 43 ms. This is
-      because each audio sample is 1/48,000 seconds long and fftSize is 2048, meaning we have 2048 samples to work with
-      so 2048/48,000 is about 42.6 milliseconds.
-      */
-
       for (let i = 0; i < bufferLength; i++) {
         let y = buffer[i] * height + height / 2;
-
-        if (i === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
-
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
         x += sliceWidth;
       }
       ctx.lineTo(width, height / 2);
       ctx.stroke();
+
+      // Isolate and render the dominant frequency
+      const frequency = autoCorrelate(buffer, sampleRate);
+      console.log(frequency);
       animationFrameRef.current = requestAnimationFrame(generateAnimationFrame);
     };
     generateAnimationFrame();
