@@ -54,13 +54,13 @@ export const Tuner = () => {
   ) => {
     const { width, height } = CANVAS;
     const bufferLength = analyser.fftSize;
-    const buffer = new Uint8Array(bufferLength);
+    const buffer = new Float32Array(bufferLength);
 
     const animate = () => {
       ctx.fillStyle = "rgb(200,100,100";
 
       ctx.fillRect(0, 0, width, height);
-      analyser.getByteTimeDomainData(buffer);
+      analyser.getFloatTimeDomainData(buffer);
 
       ctx.lineWidth = 2;
       ctx.strokeStyle = "rgb(0, 0, 0)";
@@ -69,9 +69,15 @@ export const Tuner = () => {
       let sliceWidth = (width * 1.0) / bufferLength;
       let x = 0;
 
+      /*
+      buffer array contains time-series array of floats from -1 to 1. Each float represents magnitude of sound at a given point in time.
+      Assuming you have a microphone with a sample rate of 48,000Hz, a 'given point in time' is approx 43 ms. This is
+      because each audio sample is 1/48,000 seconds long and fftSize is 2048, meaning we have 2048 samples to work with
+      so 2048/48,000 is about 42.6 milliseconds.
+      */
+
       for (let i = 0; i < bufferLength; i++) {
-        let v = buffer[i] / 128.0;
-        let y = (v * height) / 2;
+        let y = buffer[i] * height + height / 2;
 
         if (i === 0) {
           ctx.moveTo(x, y);
