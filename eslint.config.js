@@ -30,6 +30,7 @@ export default [
   {
     files: ["**/*.test.ts", "**/*.test.tsx"],
     languageOptions: {
+      parser: tsParser,
       globals: {
         ...globals.jest,
       },
