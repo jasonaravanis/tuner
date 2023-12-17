@@ -13,6 +13,14 @@ export const Tuner = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameRef = useRef<number>(0);
 
+  /*
+  Because the frequency updates often, we do not control the value of the canvas or rendered frequency value with react state
+  That would trigger too many re-renders of the Tuner component. Instead we directly update the content of these DOM nodes
+  via references
+   */
+
+  const frequencyRef = useRef<HTMLParagraphElement>(null);
+
   const startTuner = useCallback(async () => {
     setError(null);
     const isSupportedBrowser = Boolean(navigator.mediaDevices.getUserMedia);
@@ -58,6 +66,14 @@ export const Tuner = () => {
     const bufferLength = analyser.fftSize;
     const buffer = new Float32Array(bufferLength);
 
+    // If new autoCorrelation result is within 5Hz of prior one, it is not significant enough to count as a change
+    const SMOOTHING_THRESHOLD = 5;
+    // To update the rendered frequency, we need to get 5 results in a row that are significantly different
+    const SMOOTHING_COUNT_LIMIT = 5;
+
+    let smoothingCount = 0;
+    let frequency = 0;
+
     const generateAnimationFrame = () => {
       analyser.getFloatTimeDomainData(buffer);
 
@@ -78,8 +94,23 @@ export const Tuner = () => {
       ctx.stroke();
 
       // Isolate and render the dominant frequency
-      const frequency = autoCorrelate(buffer, sampleRate);
-      console.log(frequency);
+      const acResult = autoCorrelate(buffer, sampleRate);
+      // Smooth the output
+      if (frequency === 0) {
+        frequency = acResult;
+      } else {
+        if (Math.abs(frequency - acResult) > SMOOTHING_THRESHOLD) {
+          if (smoothingCount < SMOOTHING_COUNT_LIMIT) {
+            smoothingCount++;
+          } else {
+            frequency = acResult;
+          }
+        }
+      }
+      if (frequencyRef.current) {
+        frequencyRef.current.textContent = `Frequency: ${frequency}`;
+      }
+
       animationFrameRef.current = requestAnimationFrame(generateAnimationFrame);
     };
     generateAnimationFrame();
@@ -100,6 +131,7 @@ export const Tuner = () => {
         {isTunerOn ? "Stop" : "Start"}
       </button>
       <Canvas {...CANVAS} ref={canvasRef} />
+      <p ref={frequencyRef}></p>
       {error && <p className="text-red-500">{error}</p>}
     </>
   );
