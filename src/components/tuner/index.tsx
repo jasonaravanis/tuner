@@ -10,16 +10,15 @@ const CANVAS = {
 export const Tuner = () => {
   const [error, setError] = useState<string | null>(null);
   const [isTunerOn, setIsTunerOn] = useState(false);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationFrameRef = useRef<number>(0);
 
   /*
   Because the frequency updates often, we do not control the value of the canvas or rendered frequency value with react state
   That would trigger too many re-renders of the Tuner component. Instead we directly update the content of these DOM nodes
   via references
-   */
-
+  */
   const frequencyRef = useRef<HTMLParagraphElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationFrameRef = useRef<number>(0);
 
   const startTuner = useCallback(async () => {
     setError(null);
@@ -66,7 +65,7 @@ export const Tuner = () => {
     const bufferLength = analyser.fftSize;
     const buffer = new Float32Array(bufferLength);
 
-    // If new autoCorrelation result is within 5Hz of prior one, it is not significant enough to count as a change
+    // autoCorrelation difference with current frequency must be > 5hz to count as a significant change
     const SMOOTHING_THRESHOLD = 5;
     // To update the rendered frequency, we need to get 5 results in a row that are significantly different
     const SMOOTHING_COUNT_LIMIT = 5;
@@ -93,24 +92,22 @@ export const Tuner = () => {
       ctx.lineTo(width, height / 2);
       ctx.stroke();
 
-      // Isolate and render the dominant frequency
+      // Isolate the dominant frequency
       const acResult = autoCorrelate(buffer, sampleRate);
       // Smooth the output
-      if (frequency === 0) {
+      const isSignificantChange =
+        Math.abs(frequency - acResult) > SMOOTHING_THRESHOLD;
+      const isConsistentlyDifferent = smoothingCount === SMOOTHING_COUNT_LIMIT;
+      if (isSignificantChange) {
+        smoothingCount++;
+      }
+      if (isConsistentlyDifferent) {
+        smoothingCount = 0;
         frequency = acResult;
-      } else {
-        if (Math.abs(frequency - acResult) > SMOOTHING_THRESHOLD) {
-          if (smoothingCount < SMOOTHING_COUNT_LIMIT) {
-            smoothingCount++;
-          } else {
-            frequency = acResult;
-          }
-        }
+        frequencyRef.current
+          ? (frequencyRef.current.textContent = `Frequency: ${frequency}`)
+          : null;
       }
-      if (frequencyRef.current) {
-        frequencyRef.current.textContent = `Frequency: ${frequency}`;
-      }
-
       animationFrameRef.current = requestAnimationFrame(generateAnimationFrame);
     };
     generateAnimationFrame();
