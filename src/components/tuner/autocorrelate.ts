@@ -1,3 +1,5 @@
+// Inspired by this contribution to the PitchDetect project: https://github.com/cwilso/PitchDetect/pull/23
+
 export const autoCorrelate = (buffer: Float32Array, sampleRate: number) => {
   let SIZE = buffer.length;
   let rms = 0;
