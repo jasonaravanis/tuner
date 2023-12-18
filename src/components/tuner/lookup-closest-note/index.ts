@@ -1,6 +1,6 @@
 const A4_FREQUENCY = 440; // Standard tuning frequency for the note of A4 in Hz
 
-export const lookupClosestNote = (frequency: number) => {
+export const getClosestNote = (frequency: number) => {
   const notes = [
     "C",
     "C#",

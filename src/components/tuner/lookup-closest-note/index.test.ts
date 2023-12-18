@@ -1,6 +1,6 @@
-import { lookupClosestNote } from ".";
+import { getClosestNote } from ".";
 
-it("finds closest note", () => {
-  expect(lookupClosestNote(440)).toBe("A");
-  expect(lookupClosestNote(520)).toBe("C");
+it("gets closest note", () => {
+  expect(getClosestNote(440)).toBe("A");
+  expect(getClosestNote(520)).toBe("C");
 });

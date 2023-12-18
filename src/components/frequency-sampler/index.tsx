@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { autoCorrelate } from "../tuner/autocorrelate";
 import useInterval from "../../hooks/use-interval";
-import { lookupClosestNote } from "../tuner/lookup-closest-note";
+import { getClosestNote } from "../tuner/lookup-closest-note";
 type Props = {
   analyser: AnalyserNode | null;
 };
@@ -29,7 +29,7 @@ const FrequencySampler = ({ analyser }: Props) => {
   return (
     <>
       <p>Frequency: {frequency}</p>
-      <p>Closest note: {lookupClosestNote(frequency)}</p>
+      <p>Closest note: {getClosestNote(frequency)}</p>
     </>
   );
 };
