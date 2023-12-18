@@ -1,24 +1,11 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import { Canvas } from "../canvas";
-import { autoCorrelate } from "./autoCorrelate";
-
-const CANVAS = {
-  width: 600,
-  height: 300,
-};
+import React, { useState, useEffect, useCallback } from "react";
+import { Oscilloscope } from "../oscilloscope";
+import { FrequencySampler } from "../frequency-sampler";
 
 export const Tuner = () => {
   const [error, setError] = useState<string | null>(null);
   const [isTunerOn, setIsTunerOn] = useState(false);
-
-  /*
-  Because the frequency updates often, we do not control the value of the canvas or rendered frequency value with react state
-  That would trigger too many re-renders of the Tuner component. Instead we directly update the content of these DOM nodes
-  via references
-  */
-  const frequencyRef = useRef<HTMLParagraphElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationFrameRef = useRef<number>(0);
+  const [analyser, setAnalyser] = useState<AnalyserNode | null>(null);
 
   const startTuner = useCallback(async () => {
     setError(null);
@@ -38,88 +25,22 @@ export const Tuner = () => {
       );
       return;
     }
-    if (!canvasRef.current) {
-      throw new Error("Canvas reference not defined");
-    }
-    const canvasContext = canvasRef.current.getContext("2d");
-    if (!canvasContext) {
-      throw new Error("Failed to get canvas context");
-    }
     try {
       const audioContext = new window.AudioContext();
       const source = audioContext.createMediaStreamSource(mediaStream);
-      const analyser = audioContext.createAnalyser();
-      source.connect(analyser);
-      analyseSound(analyser, canvasContext, audioContext.sampleRate);
+      const initialisedAnalyser = audioContext.createAnalyser();
+      source.connect(initialisedAnalyser);
+      setAnalyser(initialisedAnalyser);
     } catch {
       setError("Something went wrong!");
     }
   }, []);
 
-  const analyseSound = (
-    analyser: AnalyserNode,
-    ctx: CanvasRenderingContext2D,
-    sampleRate: number
-  ) => {
-    const { width, height } = CANVAS;
-    const bufferLength = analyser.fftSize;
-    const buffer = new Float32Array(bufferLength);
-
-    // autoCorrelation difference with current frequency must be > 5hz to count as a significant change
-    const SMOOTHING_THRESHOLD = 5;
-    // To update the rendered frequency, we need to get 5 results in a row that are significantly different
-    const SMOOTHING_COUNT_LIMIT = 5;
-
-    let smoothingCount = 0;
-    let frequency = 0;
-
-    const generateAnimationFrame = () => {
-      analyser.getFloatTimeDomainData(buffer);
-
-      // Paint the canvas
-      ctx.fillStyle = "rgb(200,100,100";
-      ctx.fillRect(0, 0, width, height);
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = "rgb(0, 0, 0)";
-      ctx.beginPath();
-      let sliceWidth = (width * 1.0) / bufferLength;
-      let x = 0;
-      for (let i = 0; i < bufferLength; i++) {
-        let y = buffer[i] * height + height / 2;
-        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-        x += sliceWidth;
-      }
-      ctx.lineTo(width, height / 2);
-      ctx.stroke();
-
-      // Isolate the dominant frequency
-      const acResult = autoCorrelate(buffer, sampleRate);
-      // Smooth the output
-      const isSignificantChange =
-        Math.abs(frequency - acResult) > SMOOTHING_THRESHOLD;
-      const isConsistentlyDifferent = smoothingCount === SMOOTHING_COUNT_LIMIT;
-      if (isSignificantChange) {
-        smoothingCount++;
-      }
-      if (isConsistentlyDifferent) {
-        smoothingCount = 0;
-        frequency = acResult;
-        frequencyRef.current
-          ? (frequencyRef.current.textContent = `Frequency: ${frequency}`)
-          : null;
-      }
-      animationFrameRef.current = requestAnimationFrame(generateAnimationFrame);
-    };
-    generateAnimationFrame();
-  };
-
   useEffect(() => {
     if (isTunerOn) {
       startTuner();
     }
-    return () => {
-      cancelAnimationFrame(animationFrameRef.current);
-    };
+    return () => {};
   }, [isTunerOn, startTuner]);
 
   return (
@@ -127,8 +48,8 @@ export const Tuner = () => {
       <button onClick={() => setIsTunerOn(!isTunerOn)}>
         {isTunerOn ? "Stop" : "Start"}
       </button>
-      <Canvas {...CANVAS} ref={canvasRef} />
-      <p ref={frequencyRef}></p>
+      <Oscilloscope analyser={analyser} isActive={isTunerOn} />
+      <FrequencySampler analyser={analyser} />
       {error && <p className="text-red-500">{error}</p>}
     </>
   );
