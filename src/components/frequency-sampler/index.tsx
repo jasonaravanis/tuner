@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { autoCorrelate } from "../tuner/autocorrelate";
 import useInterval from "../../hooks/use-interval";
-import { getClosestNote } from "../tuner/lookup-closest-note";
+import { getClosestMidiNote } from "../tuner/get-closest-midi-note";
+import { getNoteFromMidiNumber } from "../tuner/get-note-from-midi-number";
 type Props = {
   analyser: AnalyserNode | null;
 };
@@ -26,10 +27,13 @@ const FrequencySampler = ({ analyser }: Props) => {
   */
   useInterval(analyseSound, 200);
 
+  // TODO: use closest midi note to calculate cents difference between detected and target pitch
+  const closestNote = getNoteFromMidiNumber(getClosestMidiNote(frequency));
+
   return (
     <>
       <p>Frequency: {frequency}</p>
-      <p>Closest note: {getClosestNote(frequency)}</p>
+      <p>Closest note: {closestNote}</p>
     </>
   );
 };
