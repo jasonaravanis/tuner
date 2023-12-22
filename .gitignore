@@ -23,3 +23,5 @@ pnpm-debug.log*
 # other
 plan.md
 src/components/tuner/example.tsx
+example.css
+example.js
