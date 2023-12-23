@@ -24,7 +24,7 @@ export const wallPaperTexture = style({
 });
 
 export const rim = style({
-  width: "min(90vw, 750px)",
+  width: "min(80vh, 80vw)",
   aspectRatio: "1 / 1",
   display: "flex",
   alignItems: "center",
