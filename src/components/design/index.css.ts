@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { color, glowColor } from "../../constants";
 
 export const container = style({
   position: "relative",
@@ -75,6 +76,7 @@ export const window = style({
   borderRadius: "50%",
   boxShadow:
     "-2px 2px 2px 0 rgba(108, 115, 129, 0.4), 2px -2px 1px 0px rgba(0, 0, 0, 0.2), inset -3px 3px 2px 1px rgba(0, 0, 0, 1), inset 2px -2px 1px 0px rgba(0, 0, 0, 1)",
+  //   backgroundColor: "lightseagreen",
 });
 
 export const windowContentContainer = style({
@@ -83,12 +85,8 @@ export const windowContentContainer = style({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  // backgroundColor: "lightseagreen",
   containerType: "inline-size",
 });
-
-const color = "#04E762";
-const glowColor = "#03C956";
 
 export const currentTargetNote = style({
   color: color,
@@ -96,6 +94,11 @@ export const currentTargetNote = style({
   fontFamily: "Bazaronite",
   textShadow: `0 0 10px ${glowColor}, 0 0 25px ${glowColor}`,
   textAlign: "center",
-  marginTop: "20cqw",
+  marginTop: "25cqw",
   marginLeft: "6cqw",
+});
+
+export const dialSVG = style({
+  width: "100%",
+  height: "100%",
 });

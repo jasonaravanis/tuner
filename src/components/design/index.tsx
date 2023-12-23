@@ -1,3 +1,4 @@
+import { DialPixel } from "../dial-pixel";
 import {
   rim,
   container,
@@ -9,6 +10,7 @@ import {
   window,
   windowContentContainer,
   currentTargetNote,
+  dialSVG,
 } from "./index.css";
 
 export const DesignDemo = () => {
@@ -26,7 +28,11 @@ export const DesignDemo = () => {
             <div className={windowContainer}>
               <div className={window}>
                 <div className={windowContentContainer}>
-                  <span className={currentTargetNote}>D</span>
+                  <svg className={dialSVG}>
+                    <DialPixel cx="50%" cy="50%" />
+                    <DialPixel cx="25%" cy="25%" />
+                  </svg>
+                  {/* <span className={currentTargetNote}>A</span> */}
                 </div>
               </div>
             </div>
