@@ -7,6 +7,9 @@ import {
   innerRimTwo,
   windowContainer,
   window,
+  windowContentContainer,
+  currentTargetNote,
+  windowTwo,
 } from "./index.css";
 
 export const DesignDemo = () => {
@@ -22,7 +25,13 @@ export const DesignDemo = () => {
         <div className={innerRim}>
           <div className={innerRimTwo}>
             <div className={windowContainer}>
-              <div className={window}></div>
+              <div className={window}>
+                <div className={windowTwo}>
+                  <div className={windowContentContainer}>
+                    <span className={currentTargetNote}>E</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

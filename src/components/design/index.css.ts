@@ -50,8 +50,6 @@ export const innerRim = style({
 export const innerRimTwo = style({
   width: "92%",
   height: "92%",
-  //   position: "relative",
-  //   overflow: "hidden",
   display: "flex",
   justifyContent: "center",
   alignItems: "flex-start",
@@ -67,7 +65,6 @@ export const windowContainer = style({
   display: "flex",
   alignItems: "flex-start",
   justifyContent: "center",
-  opacity: 0.5,
   borderRadius: "20px",
   overflow: "hidden",
 });
@@ -78,5 +75,34 @@ export const window = style({
   background: "rgb(0, 0, 0, 0.5);",
   borderRadius: "50%",
   boxShadow:
-    "-2px 2px 2px 0 rgba(108, 115, 129, 0.4), 2px -2px 1px 0px rgba(0, 0, 0, 0.2), inset -3px 3px 2px 1px rgba(0, 0, 0, 0.8)",
+    "-2px 2px 2px 0 rgba(108, 115, 129, 0.4), 2px -2px 1px 0px rgba(0, 0, 0, 0.2), inset -3px 3px 2px 1px rgba(0, 0, 0, 1), inset 2px -2px 1px 0px rgba(0, 0, 0, 1)",
+});
+
+export const windowTwo = style({
+  width: "100%",
+  height: "100%",
+  display: "flex",
+  alignItems: "flex-start",
+  justifyContent: "center",
+});
+
+export const windowContentContainer = style({
+  width: "100%",
+  height: "50%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+});
+
+const color = "#04E762";
+const glowColor = "#03C956";
+
+export const currentTargetNote = style({
+  color: color,
+  fontSize: 82,
+  fontFamily: "Bazaronite",
+  textShadow: `0 0 10px ${glowColor}, 0 0 25px ${glowColor}`,
+  textAlign: "center",
+  marginTop: "5rem",
+  marginLeft: "1rem",
 });

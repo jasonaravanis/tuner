@@ -1,6 +1,7 @@
 ---
-import { baseStyle } from "./index.css"
-import './global.css';
+import { baseStyle } from "./index.css";
+import "./global.css";
+import "./font.css";
 interface Props {
   title: string;
 }
@@ -22,5 +23,4 @@ const { title } = Astro.props;
     <slot />
   </body>
 </html>
-<style is:global>
-</style>
+<style is:global></style>
