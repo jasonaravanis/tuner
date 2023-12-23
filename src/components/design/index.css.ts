@@ -24,8 +24,7 @@ export const wallPaperTexture = style({
 });
 
 export const rim = style({
-  height: "80%",
-  maxHeight: "75vh",
+  width: "min(90vw, 750px)",
   aspectRatio: "1 / 1",
   display: "flex",
   alignItems: "center",
@@ -78,20 +77,14 @@ export const window = style({
     "-2px 2px 2px 0 rgba(108, 115, 129, 0.4), 2px -2px 1px 0px rgba(0, 0, 0, 0.2), inset -3px 3px 2px 1px rgba(0, 0, 0, 1), inset 2px -2px 1px 0px rgba(0, 0, 0, 1)",
 });
 
-export const windowTwo = style({
-  width: "100%",
-  height: "100%",
-  display: "flex",
-  alignItems: "flex-start",
-  justifyContent: "center",
-});
-
 export const windowContentContainer = style({
   width: "100%",
   height: "50%",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  // backgroundColor: "lightseagreen",
+  containerType: "inline-size",
 });
 
 const color = "#04E762";
@@ -99,10 +92,10 @@ const glowColor = "#03C956";
 
 export const currentTargetNote = style({
   color: color,
-  fontSize: 82,
+  fontSize: "25cqw",
   fontFamily: "Bazaronite",
   textShadow: `0 0 10px ${glowColor}, 0 0 25px ${glowColor}`,
   textAlign: "center",
-  marginTop: "5rem",
-  marginLeft: "1rem",
+  marginTop: "20cqw",
+  marginLeft: "6cqw",
 });
