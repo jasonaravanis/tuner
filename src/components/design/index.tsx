@@ -13,6 +13,7 @@ import {
   currentTargetNote,
   dialSVG,
   sharpOrFlat,
+  frequency,
 } from "./index.css";
 
 export const DesignDemo = () => {
@@ -54,8 +55,14 @@ export const DesignDemo = () => {
                     })}
                     <DialPixel color={blueDot} cx="50%" cy={formula(50, 90)} />
                   </svg>
-                  <span className={currentTargetNote}>A</span>
-                  <span className={sharpOrFlat}>#</span>
+                  <div className={frequency}>
+                    <span>164</span>
+                    <span>hz</span>
+                  </div>
+                  <div className={currentTargetNote}>
+                    <span>A</span>
+                    <span className={sharpOrFlat}>#</span>
+                  </div>
                 </div>
               </div>
             </div>

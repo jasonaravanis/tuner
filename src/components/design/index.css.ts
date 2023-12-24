@@ -83,32 +83,40 @@ export const windowContentContainer = style({
   position: "relative",
   width: "100%",
   height: "50%",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
+  justifyContent: "flex-end",
   containerType: "inline-size",
 });
 
 export const currentTargetNote = style({
+  position: "absolute",
+  left: "52%",
+  top: "75%",
+  transform: "translate(-50%, -50%)",
   color: greenDot,
   fontSize: "20cqw",
   fontFamily: "Bazaronite",
   textShadow: `0 0 10px ${greenDotGlow}, 0 0 25px ${greenDotGlow}`,
-  marginTop: "25cqw",
-  marginLeft: "6cqw",
 });
 
 export const sharpOrFlat = style({
-  color: greenDot,
   fontSize: "10cqw",
-  fontFamily: "Bazaronite",
-  textShadow: `0 0 10px ${greenDotGlow}, 0 0 25px ${greenDotGlow}`,
-  marginTop: "25cqw",
+  position: "relative",
+  left: "-5%",
 });
 
 export const dialSVG = style({
   width: "100%",
   height: "100%",
   position: "absolute",
-  //   backgroundColor: "lightsalmon",
+});
+
+export const frequency = style({
+  position: "absolute",
+  left: "52%",
+  top: "40%",
+  transform: "translate(-50%, -50%)",
+  color: greenDot,
+  fontSize: "5cqw",
+  fontFamily: "Bazaronite",
+  textShadow: `0 0 10px ${greenDotGlow}, 0 0 25px ${greenDotGlow}`,
 });
