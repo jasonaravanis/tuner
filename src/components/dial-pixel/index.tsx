@@ -1,7 +1,13 @@
-import { centsIndicator } from "./index.css";
+import { Color } from "../../types";
 import React from "react";
 
-const DialPixel = (props: React.SVGProps<SVGCircleElement>) => {
+type Props = {
+  color: Color;
+} & React.SVGProps<SVGCircleElement>;
+
+const DialPixel = (props: Props) => {
+  const { color } = props;
+  // TODO: pull filter out so only render once?
   return (
     <>
       <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
@@ -11,7 +17,7 @@ const DialPixel = (props: React.SVGProps<SVGCircleElement>) => {
           <feMergeNode in="SourceGraphic" />
         </feMerge>
       </filter>
-      <circle filter="url(#glow)" className={centsIndicator} r="2%" {...props} />
+      <circle filter="url(#glow)" fill={color} r="1.5%" {...props} />
     </>
   );
 };

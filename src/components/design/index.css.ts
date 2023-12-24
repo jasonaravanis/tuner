@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { color, glowColor } from "../../constants";
+import { greenDot, greenDotGlow } from "../../constants";
 
 export const container = style({
   position: "relative",
@@ -80,6 +80,7 @@ export const window = style({
 });
 
 export const windowContentContainer = style({
+  position: "relative",
   width: "100%",
   height: "50%",
   display: "flex",
@@ -89,16 +90,25 @@ export const windowContentContainer = style({
 });
 
 export const currentTargetNote = style({
-  color: color,
-  fontSize: "25cqw",
+  color: greenDot,
+  fontSize: "20cqw",
   fontFamily: "Bazaronite",
-  textShadow: `0 0 10px ${glowColor}, 0 0 25px ${glowColor}`,
-  textAlign: "center",
+  textShadow: `0 0 10px ${greenDotGlow}, 0 0 25px ${greenDotGlow}`,
   marginTop: "25cqw",
   marginLeft: "6cqw",
+});
+
+export const sharpOrFlat = style({
+  color: greenDot,
+  fontSize: "10cqw",
+  fontFamily: "Bazaronite",
+  textShadow: `0 0 10px ${greenDotGlow}, 0 0 25px ${greenDotGlow}`,
+  marginTop: "25cqw",
 });
 
 export const dialSVG = style({
   width: "100%",
   height: "100%",
+  position: "absolute",
+  //   backgroundColor: "lightsalmon",
 });
