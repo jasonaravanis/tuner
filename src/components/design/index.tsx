@@ -28,7 +28,11 @@ export const DesignDemo = () => {
     return result;
   };
 
-  const dots = [12, 18, 27, 38, 50, 62, 73, 82, 88];
+  /*
+  dotsXValues chosen to have an even spacing of dots like an analog clock face.
+  Eyeballed this, but would be better to work it out mathemtatically.
+  */
+  const dotsXvalues = [12, 18, 27, 38, 50, 62, 73, 82, 88];
 
   return (
     <div className={container}>
@@ -45,7 +49,7 @@ export const DesignDemo = () => {
               <div className={window}>
                 <div className={windowContentContainer}>
                   <svg className={dialSVG}>
-                    {dots.map((dot) => {
+                    {dotsXvalues.map((dot) => {
                       return <DialPixel cx={`${dot}%`} cy={formula(dot)} />;
                     })}
                     {/* {dots} */}
