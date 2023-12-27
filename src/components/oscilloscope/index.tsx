@@ -1,3 +1,4 @@
+import { greenDot } from "../../constants";
 import { Canvas } from "../canvas";
 import { useRef, useEffect } from "react";
 
@@ -8,10 +9,9 @@ const CANVAS = {
 
 type Props = {
   analyser: AnalyserNode | null;
-  isActive: boolean;
 };
 
-const Oscilloscope = ({ analyser, isActive }: Props) => {
+const Oscilloscope = ({ analyser }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameRef = useRef<number>(0);
 
@@ -34,10 +34,10 @@ const Oscilloscope = ({ analyser, isActive }: Props) => {
       const generateAnimationFrame = () => {
         analyser.getFloatTimeDomainData(buffer);
 
-        ctx.fillStyle = "rgb(200,100,100";
-        ctx.fillRect(0, 0, width, height);
+        // ctx.fillStyle = "rgb(200,100,100";
+        ctx.clearRect(0, 0, width, height);
         ctx.lineWidth = 2;
-        ctx.strokeStyle = "rgb(0, 0, 0)";
+        ctx.strokeStyle = greenDot;
         ctx.beginPath();
         let sliceWidth = (width * 1.0) / bufferLength;
         let x = 0;
@@ -54,13 +54,11 @@ const Oscilloscope = ({ analyser, isActive }: Props) => {
       };
       generateAnimationFrame();
     };
-    if (isActive) {
-      animate();
-    }
+    animate();
     return () => {
       cancelAnimationFrame(animationFrameRef.current);
     };
-  }, [isActive, analyser]);
+  }, [analyser]);
 
   return <Canvas {...CANVAS} ref={canvasRef} />;
 };

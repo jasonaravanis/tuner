@@ -1,4 +1,5 @@
 import React, { forwardRef, type ForwardedRef } from "react";
+import { container } from "./index.css";
 
 type Props = {
   width: number;
@@ -10,12 +11,7 @@ const Canvas = (
   ref: ForwardedRef<HTMLCanvasElement>
 ) => {
   return (
-    <canvas
-      width={width}
-      height={height}
-      className="border border-rose-500"
-      ref={ref}
-    >
+    <canvas className={container} width={width} height={height} ref={ref}>
       An animated display of the detected sound frequencies
     </canvas>
   );

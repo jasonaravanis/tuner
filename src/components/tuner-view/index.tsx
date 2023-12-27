@@ -1,6 +1,7 @@
 import { blueDot, greenDot } from "../../constants";
 import { TunerOutput } from "../../types";
 import { DialPixel } from "../dial-pixel";
+import { Oscilloscope } from "../oscilloscope";
 import {
   rim,
   container,
@@ -33,9 +34,8 @@ export const TunerView = ({
   stopTuner,
   isTunerOn,
   tunerOutput,
+  analyser,
 }: Props) => {
-  console.log("thing", tunerOutput.closestNote ?? "-");
-
   return (
     <div className={container}>
       <svg className={wallpaper}>
@@ -82,6 +82,7 @@ export const TunerView = ({
                       {tunerOutput.closestNote?.accidental}
                     </span>
                   </div>
+                  {isTunerOn ? <Oscilloscope analyser={analyser} /> : null}
                 </div>
               </div>
             </div>
