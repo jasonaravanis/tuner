@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { blue, green } from "../../constants";
 import { TunerOutput } from "../../types";
 import { Circle } from "../circle";
@@ -62,44 +63,52 @@ export const TunerView = ({
           <div className={innerRimTwo}>
             <div className={screenContainer}>
               <div className={screen}>
-                {isTunerOn ? (
-                  <div className={screenContentContainer}>
-                    <svg className={tunerSVG} viewBox="0 0 560 140">
-                      <SvgGlow />
-                      {dotsXvalues.map((dot) => {
-                        return (
-                          <Circle
-                            key={dot}
-                            color={green}
-                            cx={`${dot}%`}
-                            cy="70%"
-                          />
-                        );
-                      })}
-                      <polygon
-                        filter="url(#glow)"
-                        fill={green}
-                        points="275,125 280,115 285,125"
-                      />
-                      <Circle
-                        color={blue}
-                        cx={`${tunerOutput.centGap + 50}%`}
-                        cy="60%"
-                      />
-                    </svg>
-                    <div className={frequency}>
-                      <span>{Math.round(tunerOutput.frequency)}</span>
-                      <span className={hz}>hz</span>
-                    </div>
-                    <div className={currentTargetNote}>
-                      <span>{tunerOutput.closestNote?.character ?? "-"}</span>
-                      <span className={sharpOrFlat}>
-                        {tunerOutput.closestNote?.accidental}
-                      </span>
-                    </div>
-                    <Oscilloscope analyser={analyser} />
-                  </div>
-                ) : null}
+                <AnimatePresence>
+                  {isTunerOn ? (
+                    <motion.div
+                      key="screen-content"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className={screenContentContainer}
+                    >
+                      <svg className={tunerSVG} viewBox="0 0 560 140">
+                        <SvgGlow />
+                        {dotsXvalues.map((dot) => {
+                          return (
+                            <Circle
+                              key={dot}
+                              color={green}
+                              cx={`${dot}%`}
+                              cy="70%"
+                            />
+                          );
+                        })}
+                        <polygon
+                          filter="url(#glow)"
+                          fill={green}
+                          points="275,125 280,115 285,125"
+                        />
+                        <Circle
+                          color={blue}
+                          cx={`${tunerOutput.centGap + 50}%`}
+                          cy="60%"
+                        />
+                      </svg>
+                      <div className={frequency}>
+                        <span>{Math.round(tunerOutput.frequency)}</span>
+                        <span className={hz}>hz</span>
+                      </div>
+                      <div className={currentTargetNote}>
+                        <span>{tunerOutput.closestNote?.character ?? "-"}</span>
+                        <span className={sharpOrFlat}>
+                          {tunerOutput.closestNote?.accidental}
+                        </span>
+                      </div>
+                      <Oscilloscope analyser={analyser} />
+                    </motion.div>
+                  ) : null}
+                </AnimatePresence>
               </div>
             </div>
           </div>
