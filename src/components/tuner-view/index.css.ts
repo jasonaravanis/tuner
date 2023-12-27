@@ -8,6 +8,7 @@ export const container = style({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  padding: "10rem",
 });
 
 export const wallpaper = style({
@@ -126,10 +127,8 @@ export const hz = style({
 export const buttonRimContainer = style([
   rim,
   {
-    position: "absolute",
-    right: "10%",
     width: "min(20vh, 20vw)",
-    marginLeft: "5rem",
+    marginLeft: "10rem",
     boxShadow:
       "-20px 20px 630px 10px rgb(0, 0, 0, 0.4), -40px 40px 40px 10px rgb(0, 0, 0, 0.6), -80px 80px 80px 10px rgb(0, 0, 0, 0.6)",
   },
@@ -149,26 +148,33 @@ export const buttonScreenContainer = style([
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    color: green,
-    fontSize: "2cqw",
-    fontFamily: "Bazaronite",
-    textShadow: `0 0 10px ${greenDotGlow}, 0 0 25px ${greenDotGlow}`,
   },
 ]);
 
-const animate = style({
+export const powerButton = style({
+  transition: "all 0.5s ease",
+  width: "100%",
+  height: "100%",
+  ":hover": {
+    backgroundColor: `${blue}19`,
+  },
+});
+
+const powerSymbol = style({
+  width: "100%",
+  height: "100%",
   transition: "all 0.5s ease",
 });
 
 export const powerSymbolOn = style([
-  animate,
+  powerSymbol,
   {
     fill: green,
   },
 ]);
 
 export const powerSymbolOff = style([
-  animate,
+  powerSymbol,
   {
     fill: white,
     selectors: {

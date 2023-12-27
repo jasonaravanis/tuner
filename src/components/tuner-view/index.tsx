@@ -23,6 +23,7 @@ import {
   buttonInnerRim,
   powerSymbolOn,
   powerSymbolOff,
+  powerButton,
 } from "./index.css";
 
 const dotsXvalues = [10, 20, 30, 40, 50, 60, 70, 80, 90];
@@ -109,10 +110,11 @@ export const TunerView = ({
           <div className={innerRimTwo}>
             <div className={screenContainer}>
               <div className={buttonScreenContainer}>
-                <button onClick={isTunerOn ? stopTuner : startTuner}>
+                <button
+                  className={powerButton}
+                  onClick={isTunerOn ? stopTuner : startTuner}
+                >
                   <svg
-                    width="200"
-                    height="200"
                     viewBox="0 0 240 240"
                     xmlns="http://www.w3.org/2000/svg"
                     className={isTunerOn ? powerSymbolOn : powerSymbolOff}
