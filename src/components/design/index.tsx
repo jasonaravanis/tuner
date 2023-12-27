@@ -1,5 +1,4 @@
 import { blueDot, greenDot } from "../../constants";
-import { getCircleY } from "../../utils/get-circle-y";
 import { DialPixel } from "../dial-pixel";
 import {
   rim,
@@ -17,13 +16,9 @@ import {
   frequency,
 } from "./index.css";
 
-export const DesignDemo = () => {
-  /*
-  dotsXValues chosen to have an even spacing of dots like an analog clock face.
-  Eyeballed this, but would be better to work it out mathematically.
-  */
-  const dotsXvalues = [12, 18, 27, 38, 50, 62, 73, 82, 88];
+const dotsXvalues = [10, 20, 30, 40, 50, 60, 70, 80, 90];
 
+export const DesignDemo = () => {
   return (
     <div className={container}>
       <svg className={wallpaper}>
@@ -50,15 +45,11 @@ export const DesignDemo = () => {
                           key={dot}
                           color={greenDot}
                           cx={`${dot}%`}
-                          cy={getCircleY(dot, 80)}
+                          cy="25%"
                         />
                       );
                     })}
-                    <DialPixel
-                      color={blueDot}
-                      cx="50%"
-                      cy={getCircleY(50, 90)}
-                    />
+                    <DialPixel color={blueDot} cx="50%" cy="15%" />
                   </svg>
                   <div className={frequency}>
                     <span>164</span>
@@ -66,7 +57,7 @@ export const DesignDemo = () => {
                   </div>
                   <div className={currentTargetNote}>
                     <span>A</span>
-                    <span className={sharpOrFlat}>#</span>
+                    {/* <span className={sharpOrFlat}>#</span> */}
                   </div>
                 </div>
               </div>
