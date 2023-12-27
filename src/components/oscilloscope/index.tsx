@@ -1,9 +1,9 @@
-import { greenDot } from "../../constants";
+import { greenDot, greenDotGlow } from "../../constants";
 import { Canvas } from "../canvas";
 import { useRef, useEffect } from "react";
 
 const CANVAS = {
-  width: 600,
+  width: 1000,
   height: 300,
 };
 
@@ -34,10 +34,11 @@ const Oscilloscope = ({ analyser }: Props) => {
       const generateAnimationFrame = () => {
         analyser.getFloatTimeDomainData(buffer);
 
-        // ctx.fillStyle = "rgb(200,100,100";
         ctx.clearRect(0, 0, width, height);
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 5;
         ctx.strokeStyle = greenDot;
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = greenDotGlow;
         ctx.beginPath();
         let sliceWidth = (width * 1.0) / bufferLength;
         let x = 0;

@@ -16,6 +16,7 @@ import {
   sharpOrFlat,
   frequency,
   tunerSVG,
+  hz,
 } from "./index.css";
 
 const dotsXvalues = [10, 20, 30, 40, 50, 60, 70, 80, 90];
@@ -74,7 +75,7 @@ export const TunerView = ({
                   </svg>
                   <div className={frequency}>
                     <span>{Math.round(tunerOutput.frequency)}</span>
-                    <span>hz</span>
+                    <span className={hz}>hz</span>
                   </div>
                   <div className={currentTargetNote}>
                     <span>{tunerOutput.closestNote?.character ?? "-"}</span>
@@ -82,7 +83,7 @@ export const TunerView = ({
                       {tunerOutput.closestNote?.accidental}
                     </span>
                   </div>
-                  {isTunerOn ? <Oscilloscope analyser={analyser} /> : null}
+                  <Oscilloscope analyser={analyser} />
                 </div>
               </div>
             </div>

@@ -54,24 +54,24 @@ export const innerRimTwo = style({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+  justifyContent: "center",
   borderRadius: "20%",
   boxShadow:
     "-2px 2px 2px 0 rgba(108, 115, 129, 0.4), 2px -2px 1px 0px rgba(0, 0, 0, 0.2), inset -3px 3px 2px 1px rgba(0, 0, 0, 0.5)",
 });
 
 export const screenContainer = style({
-  marginTop: "5%",
   width: "90%",
-  height: "45%",
+  height: "90%",
   display: "flex",
-  alignItems: "flex-start",
+  alignItems: "center",
   justifyContent: "center",
-  borderRadius: "20px",
 });
 
 export const screen = style({
   width: "100%",
-  height: "200%",
+  height: "100%",
+  overflow: "hidden",
   background: "rgb(0, 0, 0, 0.5);",
   borderRadius: "20%",
   boxShadow:
@@ -86,15 +86,15 @@ export const screenContentContainer = style({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  gap: "10px",
 });
 
 export const currentTargetNote = style({
-  transform: "translate(10%, -10%)",
+  transform: "translate(10%, 20%)",
   color: greenDot,
   fontSize: "20cqw",
   fontFamily: "Bazaronite",
   textShadow: `0 0 10px ${greenDotGlow}, 0 0 25px ${greenDotGlow}`,
+  marginBottom: "5%",
 });
 
 export const sharpOrFlat = style({
@@ -103,13 +103,17 @@ export const sharpOrFlat = style({
 
 export const tunerSVG = style({
   width: "100%",
-  height: "15%",
+  height: "25%",
 });
 
 export const frequency = style({
-  transform: "translate(10%, 0%)",
+  transform: "translate(0%, 25%)",
   color: greenDot,
   fontSize: "5cqw",
   fontFamily: "Bazaronite",
   textShadow: `0 0 10px ${greenDotGlow}, 0 0 25px ${greenDotGlow}`,
+});
+
+export const hz = style({
+  marginLeft: "0.5rem",
 });

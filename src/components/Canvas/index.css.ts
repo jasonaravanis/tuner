@@ -1,6 +1,5 @@
 import { style } from "@vanilla-extract/css";
 
-export const container = style({
-  width: "100%",
-  height: "20%",
+export const element = style({
+  height: "30%",
 });
