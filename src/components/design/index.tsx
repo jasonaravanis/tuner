@@ -28,7 +28,12 @@ export const DesignDemo = () => {
     <div className={container}>
       <svg className={wallpaper}>
         <filter id="noise">
-          <feTurbulence baseFrequency="0.5" type="fractalNoise" numOctaves="3" stitchTiles="stitch" />
+          <feTurbulence
+            baseFrequency="0.5"
+            type="fractalNoise"
+            numOctaves="3"
+            stitchTiles="stitch"
+          />
         </filter>
         <rect className={wallPaperTexture} filter="url(#noise)" />
       </svg>
@@ -40,9 +45,20 @@ export const DesignDemo = () => {
                 <div className={windowContentContainer}>
                   <svg className={dialSVG}>
                     {dotsXvalues.map((dot) => {
-                      return <DialPixel color={greenDot} cx={`${dot}%`} cy={getCircleY(dot, 80)} />;
+                      return (
+                        <DialPixel
+                          key={dot}
+                          color={greenDot}
+                          cx={`${dot}%`}
+                          cy={getCircleY(dot, 80)}
+                        />
+                      );
                     })}
-                    <DialPixel color={blueDot} cx="50%" cy={getCircleY(50, 90)} />
+                    <DialPixel
+                      color={blueDot}
+                      cx="50%"
+                      cy={getCircleY(50, 90)}
+                    />
                   </svg>
                   <div className={frequency}>
                     <span>164</span>
