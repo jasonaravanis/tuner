@@ -56,17 +56,35 @@ export const TunerView = ({
             <div className={screenContainer}>
               <div className={screen}>
                 <div className={screenContentContainer}>
-                  <svg className={tunerSVG}>
+                  <svg className={tunerSVG} viewBox="0 0 560 140">
+                    <filter
+                      id="glow"
+                      x="-100%"
+                      y="-100%"
+                      width="300%"
+                      height="300%"
+                    >
+                      <feGaussianBlur stdDeviation="5" result="coloredBlur" />
+                      <feMerge>
+                        <feMergeNode in="coloredBlur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
                     {dotsXvalues.map((dot) => {
                       return (
                         <DialPixel
                           key={dot}
                           color={greenDot}
                           cx={`${dot}%`}
-                          cy="80%"
+                          cy="70%"
                         />
                       );
                     })}
+                    <polygon
+                      filter="url(#glow)"
+                      fill={greenDot}
+                      points="275,125 280,115 285,125"
+                    />
                     <DialPixel
                       color={blueDot}
                       cx={`${tunerOutput.centGap + 50}%`}

@@ -1,5 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
 export const element = style({
-  height: "30%",
+  position: "absolute",
+  top: "60%",
 });

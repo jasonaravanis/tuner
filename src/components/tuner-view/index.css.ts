@@ -83,13 +83,13 @@ export const screenContentContainer = style({
   width: "100%",
   height: "100%",
   containerType: "inline-size",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
 });
 
 export const currentTargetNote = style({
-  transform: "translate(10%, 20%)",
+  position: "absolute",
+  top: "40%",
+  left: "50%",
+  transform: "translate(-30%)",
   color: greenDot,
   fontSize: "20cqw",
   fontFamily: "Bazaronite",
@@ -102,12 +102,16 @@ export const sharpOrFlat = style({
 });
 
 export const tunerSVG = style({
+  position: "absolute",
   width: "100%",
   height: "25%",
 });
 
 export const frequency = style({
-  transform: "translate(0%, 25%)",
+  position: "absolute",
+  top: "30%",
+  left: "50%",
+  transform: "translate(-50%, 25%)",
   color: greenDot,
   fontSize: "5cqw",
   fontFamily: "Bazaronite",

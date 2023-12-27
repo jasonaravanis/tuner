@@ -1,11 +1,14 @@
 import { greenDot, greenDotGlow } from "../../constants";
-import { Canvas } from "../canvas";
 import { useRef, useEffect } from "react";
+import { element } from "./index.css";
 
 const CANVAS = {
   width: 1000,
-  height: 300,
+  height: 200,
 };
+
+// Playing some notes can cause waveform to clip off the canvas, so scale down to make it look nicer
+const SCALE_FACTOR = 0.3;
 
 type Props = {
   analyser: AnalyserNode | null;
@@ -35,15 +38,15 @@ const Oscilloscope = ({ analyser }: Props) => {
         analyser.getFloatTimeDomainData(buffer);
 
         ctx.clearRect(0, 0, width, height);
-        ctx.lineWidth = 5;
+        ctx.lineWidth = 6;
         ctx.strokeStyle = greenDot;
-        ctx.shadowBlur = 20;
+        ctx.shadowBlur = 30;
         ctx.shadowColor = greenDotGlow;
         ctx.beginPath();
         let sliceWidth = (width * 1.0) / bufferLength;
         let x = 0;
         for (let i = 0; i < bufferLength; i++) {
-          let y = buffer[i] * height + height / 2;
+          let y = buffer[i] * height * SCALE_FACTOR + height / 2;
           i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
           x += sliceWidth;
         }
@@ -61,7 +64,11 @@ const Oscilloscope = ({ analyser }: Props) => {
     };
   }, [analyser]);
 
-  return <Canvas {...CANVAS} ref={canvasRef} />;
+  return (
+    <canvas {...CANVAS} ref={canvasRef} className={element}>
+      An animated display of the detected sound frequencies
+    </canvas>
+  );
 };
 
 export { Oscilloscope };
