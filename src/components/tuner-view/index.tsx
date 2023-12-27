@@ -66,7 +66,11 @@ export const TunerView = ({
                         />
                       );
                     })}
-                    <DialPixel color={blueDot} cx="50%" cy="50%" />
+                    <DialPixel
+                      color={blueDot}
+                      cx={`${tunerOutput.centGap + 50}%`}
+                      cy="60%"
+                    />
                   </svg>
                   <div className={frequency}>
                     <span>{Math.round(tunerOutput.frequency)}</span>
