@@ -1,24 +1,13 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { blue, green } from "../../constants";
+import { AnimatePresence } from "framer-motion";
 import { TunerOutput } from "../../types";
-import { Circle } from "../circle";
-import { Oscilloscope } from "../oscilloscope";
 import { SvgGlow } from "../svg-glow";
 import {
   rim,
   container,
   innerRim,
-  wallPaperTexture,
-  wallpaper,
   innerRimTwo,
   screenContainer,
   screen,
-  screenContentContainer,
-  currentTargetNote,
-  sharpOrFlat,
-  frequency,
-  tunerSVG,
-  hz,
   buttonScreenContainer,
   buttonRimContainer,
   buttonInnerRim,
@@ -26,8 +15,8 @@ import {
   powerSymbolOff,
   powerButton,
 } from "./index.css";
-
-const dotsXvalues = [10, 20, 30, 40, 50, 60, 70, 80, 90];
+import { Wallpaper } from "../wallpaper";
+import { ScreenContent } from "../screen-content";
 
 type Props = {
   error: string | null;
@@ -47,17 +36,7 @@ export const TunerView = ({
 }: Props) => {
   return (
     <div className={container}>
-      <svg className={wallpaper}>
-        <filter id="noise">
-          <feTurbulence
-            baseFrequency="0.5"
-            type="fractalNoise"
-            numOctaves="3"
-            stitchTiles="stitch"
-          />
-        </filter>
-        <rect className={wallPaperTexture} filter="url(#noise)" />
-      </svg>
+      <Wallpaper />
       <div className={rim}>
         <div className={innerRim}>
           <div className={innerRimTwo}>
@@ -65,48 +44,10 @@ export const TunerView = ({
               <div className={screen}>
                 <AnimatePresence>
                   {isTunerOn ? (
-                    <motion.div
-                      key="screen-content"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className={screenContentContainer}
-                    >
-                      <svg className={tunerSVG} viewBox="0 0 560 140">
-                        <SvgGlow />
-                        {dotsXvalues.map((dot) => {
-                          return (
-                            <Circle
-                              key={dot}
-                              color={green}
-                              cx={`${dot}%`}
-                              cy="70%"
-                            />
-                          );
-                        })}
-                        <polygon
-                          filter="url(#glow)"
-                          fill={green}
-                          points="275,125 280,115 285,125"
-                        />
-                        <Circle
-                          color={blue}
-                          cx={`${tunerOutput.centGap + 50}%`}
-                          cy="60%"
-                        />
-                      </svg>
-                      <div className={frequency}>
-                        <span>{Math.round(tunerOutput.frequency)}</span>
-                        <span className={hz}>hz</span>
-                      </div>
-                      <div className={currentTargetNote}>
-                        <span>{tunerOutput.closestNote?.character ?? "-"}</span>
-                        <span className={sharpOrFlat}>
-                          {tunerOutput.closestNote?.accidental}
-                        </span>
-                      </div>
-                      <Oscilloscope analyser={analyser} />
-                    </motion.div>
+                    <ScreenContent
+                      tunerOutput={tunerOutput}
+                      analyser={analyser}
+                    />
                   ) : null}
                 </AnimatePresence>
               </div>

@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { blue, green, greenDotGlow, white } from "../../constants";
+import { blue, green, white } from "../../constants";
 
 export const container = style({
   position: "relative",
@@ -9,21 +9,6 @@ export const container = style({
   alignItems: "center",
   justifyContent: "center",
   padding: "10rem",
-});
-
-export const wallpaper = style({
-  position: "absolute",
-  width: "100%",
-  height: "100%",
-  background:
-    "linear-gradient(205deg, rgb(238 233 245) 0%, rgb(30 34 42) 100%)",
-  zIndex: -1,
-});
-
-export const wallPaperTexture = style({
-  opacity: 0.1,
-  width: "100%",
-  height: "100%",
 });
 
 export const rim = style({
@@ -77,50 +62,6 @@ export const screen = style({
   borderRadius: "20%",
   boxShadow:
     "-2px 2px 2px 0 rgba(108, 115, 129, 0.4), 2px -2px 1px 0px rgba(0, 0, 0, 0.2), inset -3px 3px 2px 1px rgba(0, 0, 0, 1), inset 2px -2px 1px 0px rgba(0, 0, 0, 1)",
-});
-
-export const screenContentContainer = style({
-  position: "relative",
-  width: "100%",
-  height: "100%",
-  containerType: "inline-size",
-});
-
-export const currentTargetNote = style({
-  position: "absolute",
-  top: "40%",
-  left: "50%",
-  transform: "translate(-30%)",
-  color: green,
-  fontSize: "20cqw",
-  fontFamily: "Bazaronite",
-  textShadow: `0 0 10px ${greenDotGlow}, 0 0 25px ${greenDotGlow}`,
-  marginBottom: "5%",
-});
-
-export const sharpOrFlat = style({
-  fontSize: "10cqw",
-});
-
-export const tunerSVG = style({
-  position: "absolute",
-  width: "100%",
-  height: "25%",
-});
-
-export const frequency = style({
-  position: "absolute",
-  top: "30%",
-  left: "50%",
-  transform: "translate(-50%, 25%)",
-  color: green,
-  fontSize: "5cqw",
-  fontFamily: "Bazaronite",
-  textShadow: `0 0 10px ${greenDotGlow}, 0 0 25px ${greenDotGlow}`,
-});
-
-export const hz = style({
-  marginLeft: "0.5rem",
 });
 
 // BUTTON
