@@ -1,6 +1,6 @@
 import { blueDot, greenDot } from "../../constants";
 import { TunerOutput } from "../../types";
-import { DialPixel } from "../dial-pixel";
+import { Circle } from "../circle";
 import { Oscilloscope } from "../oscilloscope";
 import {
   rim,
@@ -55,54 +55,56 @@ export const TunerView = ({
           <div className={innerRimTwo}>
             <div className={screenContainer}>
               <div className={screen}>
-                <div className={screenContentContainer}>
-                  <svg className={tunerSVG} viewBox="0 0 560 140">
-                    <filter
-                      id="glow"
-                      x="-100%"
-                      y="-100%"
-                      width="300%"
-                      height="300%"
-                    >
-                      <feGaussianBlur stdDeviation="5" result="coloredBlur" />
-                      <feMerge>
-                        <feMergeNode in="coloredBlur" />
-                        <feMergeNode in="SourceGraphic" />
-                      </feMerge>
-                    </filter>
-                    {dotsXvalues.map((dot) => {
-                      return (
-                        <DialPixel
-                          key={dot}
-                          color={greenDot}
-                          cx={`${dot}%`}
-                          cy="70%"
-                        />
-                      );
-                    })}
-                    <polygon
-                      filter="url(#glow)"
-                      fill={greenDot}
-                      points="275,125 280,115 285,125"
-                    />
-                    <DialPixel
-                      color={blueDot}
-                      cx={`${tunerOutput.centGap + 50}%`}
-                      cy="60%"
-                    />
-                  </svg>
-                  <div className={frequency}>
-                    <span>{Math.round(tunerOutput.frequency)}</span>
-                    <span className={hz}>hz</span>
+                {isTunerOn ? (
+                  <div className={screenContentContainer}>
+                    <svg className={tunerSVG} viewBox="0 0 560 140">
+                      <filter
+                        id="glow"
+                        x="-100%"
+                        y="-100%"
+                        width="300%"
+                        height="300%"
+                      >
+                        <feGaussianBlur stdDeviation="5" result="coloredBlur" />
+                        <feMerge>
+                          <feMergeNode in="coloredBlur" />
+                          <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                      </filter>
+                      {dotsXvalues.map((dot) => {
+                        return (
+                          <Circle
+                            key={dot}
+                            color={greenDot}
+                            cx={`${dot}%`}
+                            cy="70%"
+                          />
+                        );
+                      })}
+                      <polygon
+                        filter="url(#glow)"
+                        fill={greenDot}
+                        points="275,125 280,115 285,125"
+                      />
+                      <Circle
+                        color={blueDot}
+                        cx={`${tunerOutput.centGap + 50}%`}
+                        cy="60%"
+                      />
+                    </svg>
+                    <div className={frequency}>
+                      <span>{Math.round(tunerOutput.frequency)}</span>
+                      <span className={hz}>hz</span>
+                    </div>
+                    <div className={currentTargetNote}>
+                      <span>{tunerOutput.closestNote?.character ?? "-"}</span>
+                      <span className={sharpOrFlat}>
+                        {tunerOutput.closestNote?.accidental}
+                      </span>
+                    </div>
+                    <Oscilloscope analyser={analyser} />
                   </div>
-                  <div className={currentTargetNote}>
-                    <span>{tunerOutput.closestNote?.character ?? "-"}</span>
-                    <span className={sharpOrFlat}>
-                      {tunerOutput.closestNote?.accidental}
-                    </span>
-                  </div>
-                  <Oscilloscope analyser={analyser} />
-                </div>
+                ) : null}
               </div>
             </div>
           </div>
