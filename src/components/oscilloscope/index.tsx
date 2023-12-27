@@ -1,4 +1,4 @@
-import { greenDot, greenDotGlow } from "../../constants";
+import { green, greenDotGlow } from "../../constants";
 import { useRef, useEffect } from "react";
 import { element } from "./index.css";
 
@@ -39,7 +39,7 @@ const Oscilloscope = ({ analyser }: Props) => {
 
         ctx.clearRect(0, 0, width, height);
         ctx.lineWidth = 6;
-        ctx.strokeStyle = greenDot;
+        ctx.strokeStyle = green;
         ctx.shadowBlur = 30;
         ctx.shadowColor = greenDotGlow;
         ctx.beginPath();

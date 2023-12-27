@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { greenDot, greenDotGlow } from "../../constants";
+import { green, greenDotGlow } from "../../constants";
 
 export const container = style({
   position: "relative",
@@ -90,7 +90,7 @@ export const currentTargetNote = style({
   top: "40%",
   left: "50%",
   transform: "translate(-30%)",
-  color: greenDot,
+  color: green,
   fontSize: "20cqw",
   fontFamily: "Bazaronite",
   textShadow: `0 0 10px ${greenDotGlow}, 0 0 25px ${greenDotGlow}`,
@@ -112,7 +112,7 @@ export const frequency = style({
   top: "30%",
   left: "50%",
   transform: "translate(-50%, 25%)",
-  color: greenDot,
+  color: green,
   fontSize: "5cqw",
   fontFamily: "Bazaronite",
   textShadow: `0 0 10px ${greenDotGlow}, 0 0 25px ${greenDotGlow}`,
@@ -121,3 +121,37 @@ export const frequency = style({
 export const hz = style({
   marginLeft: "0.5rem",
 });
+
+// BUTTON
+export const buttonRimContainer = style([
+  rim,
+  {
+    position: "absolute",
+    right: "10%",
+    width: "min(20vh, 20vw)",
+    marginLeft: "5rem",
+    boxShadow:
+      "-20px 20px 630px 10px rgb(0, 0, 0, 0.4), -40px 40px 40px 10px rgb(0, 0, 0, 0.6), -80px 80px 80px 10px rgb(0, 0, 0, 0.6)",
+  },
+]);
+
+export const buttonInnerRim = style([
+  innerRim,
+  {
+    boxShadow:
+      "2px -2px 2px 0 rgb(108, 115, 129, 0.8), -30px 30px 25px 10px rgb(0, 0, 0, 0.4), inset -2px 2px 2px 0 rgb(108, 115, 129, 0.2), inset 2px -2px 2px 0px rgb(0, 0, 0, 0.3)",
+  },
+]);
+
+export const buttonScreenContainer = style([
+  screen,
+  {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: green,
+    fontSize: "2cqw",
+    fontFamily: "Bazaronite",
+    textShadow: `0 0 10px ${greenDotGlow}, 0 0 25px ${greenDotGlow}`,
+  },
+]);
