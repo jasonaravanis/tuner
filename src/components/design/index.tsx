@@ -11,9 +11,9 @@ import {
   window,
   windowContentContainer,
   currentTargetNote,
-  dialSVG,
   sharpOrFlat,
   frequency,
+  tunerSVG,
 } from "./index.css";
 
 const dotsXvalues = [10, 20, 30, 40, 50, 60, 70, 80, 90];
@@ -38,26 +38,27 @@ export const DesignDemo = () => {
             <div className={windowContainer}>
               <div className={window}>
                 <div className={windowContentContainer}>
-                  <svg className={dialSVG}>
+                  <svg className={tunerSVG}>
                     {dotsXvalues.map((dot) => {
                       return (
                         <DialPixel
                           key={dot}
                           color={greenDot}
                           cx={`${dot}%`}
-                          cy="25%"
+                          cy="80%"
                         />
                       );
                     })}
-                    <DialPixel color={blueDot} cx="50%" cy="15%" />
+                    <DialPixel color={blueDot} cx="50%" cy="50%" />
                   </svg>
                   <div className={frequency}>
                     <span>164</span>
                     <span>hz</span>
                   </div>
+
                   <div className={currentTargetNote}>
                     <span>A</span>
-                    {/* <span className={sharpOrFlat}>#</span> */}
+                    <span className={sharpOrFlat}>#</span>
                   </div>
                 </div>
               </div>

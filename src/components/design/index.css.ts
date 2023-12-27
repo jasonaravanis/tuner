@@ -52,8 +52,8 @@ export const innerRimTwo = style({
   width: "92%",
   height: "92%",
   display: "flex",
-  justifyContent: "center",
-  alignItems: "flex-start",
+  flexDirection: "column",
+  alignItems: "center",
   borderRadius: "20%",
   boxShadow:
     "-2px 2px 2px 0 rgba(108, 115, 129, 0.4), 2px -2px 1px 0px rgba(0, 0, 0, 0.2), inset -3px 3px 2px 1px rgba(0, 0, 0, 0.5)",
@@ -67,7 +67,6 @@ export const windowContainer = style({
   alignItems: "flex-start",
   justifyContent: "center",
   borderRadius: "20px",
-  overflow: "hidden",
 });
 
 export const window = style({
@@ -77,22 +76,21 @@ export const window = style({
   borderRadius: "20%",
   boxShadow:
     "-2px 2px 2px 0 rgba(108, 115, 129, 0.4), 2px -2px 1px 0px rgba(0, 0, 0, 0.2), inset -3px 3px 2px 1px rgba(0, 0, 0, 1), inset 2px -2px 1px 0px rgba(0, 0, 0, 1)",
-  //   backgroundColor: "lightseagreen",
 });
 
 export const windowContentContainer = style({
   position: "relative",
   width: "100%",
-  height: "50%",
-  justifyContent: "flex-end",
+  height: "100%",
   containerType: "inline-size",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: "10px",
 });
 
 export const currentTargetNote = style({
-  position: "absolute",
-  left: "51.5%",
-  top: "75%",
-  transform: "translate(-50%, -50%)",
+  transform: "translate(10%, -10%)",
   color: greenDot,
   fontSize: "20cqw",
   fontFamily: "Bazaronite",
@@ -101,21 +99,15 @@ export const currentTargetNote = style({
 
 export const sharpOrFlat = style({
   fontSize: "10cqw",
-  position: "relative",
-  left: "-5%",
 });
 
-export const dialSVG = style({
+export const tunerSVG = style({
   width: "100%",
-  height: "100%",
-  position: "absolute",
+  height: "15%",
 });
 
 export const frequency = style({
-  position: "absolute",
-  left: "52%",
-  top: "42%",
-  transform: "translate(-50%, -50%)",
+  transform: "translate(10%, 0%)",
   color: greenDot,
   fontSize: "5cqw",
   fontFamily: "Bazaronite",
