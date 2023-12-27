@@ -1,27 +1,27 @@
 import { useState } from "react";
-import { autoCorrelate } from "../../utils/auto-correlate";
 import useInterval from "../../hooks/use-interval";
 import { getClosestMidiNote } from "../../utils/get-closest-midi-note";
 import { getNoteFromMidiNumber } from "../../utils/get-note-from-midi-number";
 import { getCentsFromFrequency } from "../../utils/get-cents-from-frequency";
 import { getFrequencyFromMidiNumber } from "../../utils/get-frequency-from-midi-number";
-
+import { autoCorrelate } from "../../utils/auto-correlate";
+import { Note, TunerOutput } from "../../types";
 type Props = {
   analyser: AnalyserNode | null;
 };
 
-type TunerOutput = {
-  closestNote: string;
-  centGap: number;
-  frequency: number;
+const INIT_TUNER_STATE: TunerOutput = {
+  closestNote: {
+    character: null,
+    accidental: null,
+    octave: 0,
+  },
+  centGap: 0,
+  frequency: 0,
 };
 
-const FrequencySampler = ({ analyser }: Props) => {
-  const [tunerOutput, setTunerOutput] = useState<TunerOutput>({
-    closestNote: "",
-    centGap: 0,
-    frequency: 0,
-  });
+const useFrequencySampler = ({ analyser }: Props): TunerOutput => {
+  const [tunerOutput, setTunerOutput] = useState<TunerOutput>(INIT_TUNER_STATE);
 
   const analyseSound = () => {
     if (!analyser) {
@@ -35,10 +35,16 @@ const FrequencySampler = ({ analyser }: Props) => {
       buffer,
       analyser.context.sampleRate
     );
+
+    if (frequency === -1) {
+      setTunerOutput(INIT_TUNER_STATE);
+      return;
+    }
+
     const closestMidiNote: number = getClosestMidiNote(frequency);
     const frequencyOfClosestNote: number =
       getFrequencyFromMidiNumber(closestMidiNote);
-    const closestNote: string = getNoteFromMidiNumber(closestMidiNote);
+    const closestNote: Note = getNoteFromMidiNumber(closestMidiNote);
     const centGap: number = getCentsFromFrequency(
       frequency,
       frequencyOfClosestNote
@@ -55,15 +61,9 @@ const FrequencySampler = ({ analyser }: Props) => {
   analyser could populate the buffer up to 2048 times per second, but that is way faster than React could (or should) update the UI
   So we limit to taking a snapshot every 200 ms which is a good balance between resource intensity and live updates.
   */
-  useInterval(analyseSound, 200);
+  useInterval(analyseSound, analyser ? 200 : null);
 
-  return (
-    <>
-      <p>Frequency: {tunerOutput.frequency}</p>
-      <p>Closest note: {tunerOutput.closestNote}</p>
-      <p>Cents: {tunerOutput.centGap}</p>
-    </>
-  );
+  return tunerOutput;
 };
 
-export { FrequencySampler };
+export { useFrequencySampler };

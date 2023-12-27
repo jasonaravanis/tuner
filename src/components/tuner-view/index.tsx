@@ -1,4 +1,5 @@
 import { blueDot, greenDot } from "../../constants";
+import { TunerOutput } from "../../types";
 import { DialPixel } from "../dial-pixel";
 import {
   rim,
@@ -7,9 +8,9 @@ import {
   wallPaperTexture,
   wallpaper,
   innerRimTwo,
-  windowContainer,
-  window,
-  windowContentContainer,
+  screenContainer,
+  screen,
+  screenContentContainer,
   currentTargetNote,
   sharpOrFlat,
   frequency,
@@ -18,7 +19,23 @@ import {
 
 const dotsXvalues = [10, 20, 30, 40, 50, 60, 70, 80, 90];
 
-export const DesignDemo = () => {
+type Props = {
+  error: string | null;
+  isTunerOn: boolean;
+  startTuner: () => Promise<void>;
+  stopTuner: () => void;
+  analyser: AnalyserNode | null;
+  tunerOutput: TunerOutput;
+};
+
+export const TunerView = ({
+  startTuner,
+  stopTuner,
+  isTunerOn,
+  tunerOutput,
+}: Props) => {
+  console.log("thing", tunerOutput.closestNote ?? "-");
+
   return (
     <div className={container}>
       <svg className={wallpaper}>
@@ -35,9 +52,9 @@ export const DesignDemo = () => {
       <div className={rim}>
         <div className={innerRim}>
           <div className={innerRimTwo}>
-            <div className={windowContainer}>
-              <div className={window}>
-                <div className={windowContentContainer}>
+            <div className={screenContainer}>
+              <div className={screen}>
+                <div className={screenContentContainer}>
                   <svg className={tunerSVG}>
                     {dotsXvalues.map((dot) => {
                       return (
@@ -52,13 +69,14 @@ export const DesignDemo = () => {
                     <DialPixel color={blueDot} cx="50%" cy="50%" />
                   </svg>
                   <div className={frequency}>
-                    <span>164</span>
+                    <span>{Math.round(tunerOutput.frequency)}</span>
                     <span>hz</span>
                   </div>
-
                   <div className={currentTargetNote}>
-                    <span>A</span>
-                    <span className={sharpOrFlat}>#</span>
+                    <span>{tunerOutput.closestNote?.character ?? "-"}</span>
+                    <span className={sharpOrFlat}>
+                      {tunerOutput.closestNote?.accidental}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -66,6 +84,20 @@ export const DesignDemo = () => {
           </div>
         </div>
       </div>
+      {isTunerOn ? (
+        <button onClick={stopTuner}>Stop</button>
+      ) : (
+        <button onClick={startTuner}>Start</button>
+      )}
     </div>
   );
 };
+
+// return (
+//   <>
+
+//     <Oscilloscope analyser={analyser} isActive={isTunerOn} />
+//     <FrequencySampler analyser={analyser} />
+//     {error && <p className="text-red-500">{error}</p>}
+//   </>
+// );

@@ -59,7 +59,7 @@ export const innerRimTwo = style({
     "-2px 2px 2px 0 rgba(108, 115, 129, 0.4), 2px -2px 1px 0px rgba(0, 0, 0, 0.2), inset -3px 3px 2px 1px rgba(0, 0, 0, 0.5)",
 });
 
-export const windowContainer = style({
+export const screenContainer = style({
   marginTop: "5%",
   width: "90%",
   height: "45%",
@@ -69,7 +69,7 @@ export const windowContainer = style({
   borderRadius: "20px",
 });
 
-export const window = style({
+export const screen = style({
   width: "100%",
   height: "200%",
   background: "rgb(0, 0, 0, 0.5);",
@@ -78,7 +78,7 @@ export const window = style({
     "-2px 2px 2px 0 rgba(108, 115, 129, 0.4), 2px -2px 1px 0px rgba(0, 0, 0, 0.2), inset -3px 3px 2px 1px rgba(0, 0, 0, 1), inset 2px -2px 1px 0px rgba(0, 0, 0, 1)",
 });
 
-export const windowContentContainer = style({
+export const screenContentContainer = style({
   position: "relative",
   width: "100%",
   height: "100%",

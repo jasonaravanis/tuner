@@ -1,13 +1,16 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Oscilloscope } from "../oscilloscope";
-import { FrequencySampler } from "../frequency-sampler";
+import React, { useState, useCallback } from "react";
+import { TunerView } from "../tuner-view";
+import { useFrequencySampler } from "../../hooks/use-frequency-sampler";
 
 export const Tuner = () => {
   const [error, setError] = useState<string | null>(null);
   const [isTunerOn, setIsTunerOn] = useState(false);
   const [analyser, setAnalyser] = useState<AnalyserNode | null>(null);
 
+  const tunerOutput = useFrequencySampler({ analyser });
+
   const startTuner = useCallback(async () => {
+    setIsTunerOn(true);
     setError(null);
     const isSupportedBrowser = Boolean(navigator.mediaDevices.getUserMedia);
     if (!isSupportedBrowser) {
@@ -36,21 +39,20 @@ export const Tuner = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (isTunerOn) {
-      startTuner();
-    }
-    return () => {};
-  }, [isTunerOn, startTuner]);
+  const stopTuner = () => {
+    setIsTunerOn(false);
+    setAnalyser(null);
+    setError(null);
+  };
 
   return (
-    <>
-      <button onClick={() => setIsTunerOn(!isTunerOn)}>
-        {isTunerOn ? "Stop" : "Start"}
-      </button>
-      <Oscilloscope analyser={analyser} isActive={isTunerOn} />
-      <FrequencySampler analyser={analyser} />
-      {error && <p className="text-red-500">{error}</p>}
-    </>
+    <TunerView
+      error={error}
+      isTunerOn={isTunerOn}
+      startTuner={startTuner}
+      stopTuner={stopTuner}
+      analyser={analyser}
+      tunerOutput={tunerOutput}
+    />
   );
 };

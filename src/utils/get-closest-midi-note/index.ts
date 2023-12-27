@@ -1,4 +1,4 @@
-import { A4_FREQUENCY } from "../../../constants";
+import { A4_FREQUENCY } from "../../constants";
 
 /*
 Derive MIDI note number, credit to https://newt.phys.unsw.edu.au/jw/notes.html
