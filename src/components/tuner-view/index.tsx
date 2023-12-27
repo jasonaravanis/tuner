@@ -1,4 +1,4 @@
-import { blue, green, red } from "../../constants";
+import { blue, green } from "../../constants";
 import { TunerOutput } from "../../types";
 import { Circle } from "../circle";
 import { Oscilloscope } from "../oscilloscope";
@@ -21,6 +21,8 @@ import {
   buttonScreenContainer,
   buttonRimContainer,
   buttonInnerRim,
+  powerSymbolOn,
+  powerSymbolOff,
 } from "./index.css";
 
 const dotsXvalues = [10, 20, 30, 40, 50, 60, 70, 80, 90];
@@ -113,6 +115,7 @@ export const TunerView = ({
                     height="200"
                     viewBox="0 0 240 240"
                     xmlns="http://www.w3.org/2000/svg"
+                    className={isTunerOn ? powerSymbolOn : powerSymbolOff}
                   >
                     <SvgGlow />
                     <path
@@ -121,7 +124,6 @@ export const TunerView = ({
                       d="M120 76.9375C121.829 76.9375 123.312 78.4206 123.312 80.25V120C123.312 121.829 121.829 123.312 120 123.312C118.171 123.312 116.688 121.829 116.688 120V80.25C116.688 78.4206 118.171 76.9375 120 76.9375ZM94.2348 89.5502C95.5284 90.8438 95.5284 92.9412 94.2348 94.2348C80.0051 108.465 80.0051 131.535 94.2348 145.765C108.465 159.995 131.535 159.995 145.765 145.765C159.995 131.535 159.995 108.465 145.765 94.2348C144.472 92.9412 144.472 90.8438 145.765 89.5502C147.059 88.2566 149.156 88.2566 150.45 89.5502C167.267 106.367 167.267 133.633 150.45 150.45C133.633 167.267 106.367 167.267 89.5502 150.45C72.7333 133.633 72.7333 106.367 89.5502 89.5502C90.8438 88.2566 92.9412 88.2566 94.2348 89.5502Z"
                       stroke-linecap="round"
                       stroke-linejoin="round"
-                      fill={isTunerOn ? red : blue}
                       filter="url(#glow)"
                     />
                   </svg>

@@ -20,3 +20,4 @@ export const greenDotGlow = "#03C956";
 
 export const blue = "#1be7ff";
 export const red = "#ff0054";
+export const white = "#fff";

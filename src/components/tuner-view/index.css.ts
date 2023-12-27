@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { green, greenDotGlow } from "../../constants";
+import { blue, green, greenDotGlow, white } from "../../constants";
 
 export const container = style({
   position: "relative",
@@ -153,5 +153,28 @@ export const buttonScreenContainer = style([
     fontSize: "2cqw",
     fontFamily: "Bazaronite",
     textShadow: `0 0 10px ${greenDotGlow}, 0 0 25px ${greenDotGlow}`,
+  },
+]);
+
+const animate = style({
+  transition: "all 0.5s ease",
+});
+
+export const powerSymbolOn = style([
+  animate,
+  {
+    fill: green,
+  },
+]);
+
+export const powerSymbolOff = style([
+  animate,
+  {
+    fill: white,
+    selectors: {
+      "&:hover": {
+        fill: blue,
+      },
+    },
   },
 ]);
