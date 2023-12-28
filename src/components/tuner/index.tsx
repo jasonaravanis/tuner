@@ -11,35 +11,30 @@ export const Tuner = () => {
 
   const startTuner = useCallback(async () => {
     setError(null);
-    const isSupportedBrowser = Boolean(navigator.mediaDevices.getUserMedia);
-    if (!isSupportedBrowser) {
-      throw new Error(
-        "Sorry, your browser doesn't support the getUserMedia API!"
-      );
-    }
-    let mediaStream;
     try {
-      mediaStream = await navigator.mediaDevices.getUserMedia({
+      const isSupportedBrowser = Boolean(navigator.mediaDevices.getUserMedia);
+      if (!isSupportedBrowser) {
+        throw new Error(
+          "Sorry, your browser doesn't support the getUserMedia API!"
+        );
+      }
+      const mediaStream = await navigator.mediaDevices.getUserMedia({
         audio: true,
       });
+      const audioContext = new window.AudioContext();
+      const source = audioContext.createMediaStreamSource(mediaStream);
+      const initialisedAnalyser = audioContext.createAnalyser();
+      source.connect(initialisedAnalyser);
+      setAnalyser(initialisedAnalyser);
+      setIsTunerOn(true);
     } catch (err) {
-      if (!mediaStream) {
+      if (String(err) === "NotAllowedError: Permission denied") {
         setError(
           "Please grant permission to access the microphone to use the tuner"
         );
+      } else {
+        setError(String(err) ? String(err) : "Something went wrong");
       }
-    }
-    try {
-      if (mediaStream) {
-        const audioContext = new window.AudioContext();
-        const source = audioContext.createMediaStreamSource(mediaStream);
-        const initialisedAnalyser = audioContext.createAnalyser();
-        source.connect(initialisedAnalyser);
-        setAnalyser(initialisedAnalyser);
-        setIsTunerOn(true);
-      }
-    } catch (err) {
-      setError(String(err) ? String(err) : "Something went wrong");
     }
   }, []);
 
