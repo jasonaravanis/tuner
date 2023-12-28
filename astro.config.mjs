@@ -8,4 +8,6 @@ export default defineConfig({
   vite: {
     plugins: [vanillaExtractPlugin()],
   },
+  site: "https://jasonaravanis.github.io",
+  base: "/tuner",
 });
