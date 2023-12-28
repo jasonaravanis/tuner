@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { TunerView } from "../tuner-view";
 import { useFrequencySampler } from "../../hooks/use-frequency-sampler";
 
@@ -10,32 +10,36 @@ export const Tuner = () => {
   const tunerOutput = useFrequencySampler({ analyser });
 
   const startTuner = useCallback(async () => {
-    setIsTunerOn(true);
     setError(null);
     const isSupportedBrowser = Boolean(navigator.mediaDevices.getUserMedia);
     if (!isSupportedBrowser) {
-      setError(
-        "Sorry, your browser doesn't support audio the getUserMedia API!"
+      throw new Error(
+        "Sorry, your browser doesn't support the getUserMedia API!"
       );
-      return;
     }
-    const mediaStream = await navigator.mediaDevices.getUserMedia({
-      audio: true,
-    });
-    if (!mediaStream) {
-      setError(
-        "Please grant permission to access the microphone to use the tuner"
-      );
-      return;
+    let mediaStream;
+    try {
+      mediaStream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+      });
+    } catch (err) {
+      if (!mediaStream) {
+        setError(
+          "Please grant permission to access the microphone to use the tuner"
+        );
+      }
     }
     try {
-      const audioContext = new window.AudioContext();
-      const source = audioContext.createMediaStreamSource(mediaStream);
-      const initialisedAnalyser = audioContext.createAnalyser();
-      source.connect(initialisedAnalyser);
-      setAnalyser(initialisedAnalyser);
-    } catch {
-      setError("Something went wrong!");
+      if (mediaStream) {
+        const audioContext = new window.AudioContext();
+        const source = audioContext.createMediaStreamSource(mediaStream);
+        const initialisedAnalyser = audioContext.createAnalyser();
+        source.connect(initialisedAnalyser);
+        setAnalyser(initialisedAnalyser);
+        setIsTunerOn(true);
+      }
+    } catch (err) {
+      setError(String(err) ? String(err) : "Something went wrong");
     }
   }, []);
 
@@ -44,6 +48,12 @@ export const Tuner = () => {
     setAnalyser(null);
     setError(null);
   };
+
+  useEffect(() => {
+    if (error) {
+      window.alert(error);
+    }
+  }, [error]);
 
   return (
     <TunerView
