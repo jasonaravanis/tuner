@@ -32,14 +32,14 @@ export const ScreenContent = ({ tunerOutput, analyser }: Props) => {
       <svg className={tunerSVG} viewBox="0 0 560 140">
         <SvgGlow />
         {dotsXvalues.map((dot) => {
-          return <Circle key={dot} color={green} cx={`${dot}%`} cy="70%" />;
+          return <Circle key={dot} fill={green} cx={`${dot}%`} cy="70%" />;
         })}
         <polygon
           filter="url(#glow)"
           fill={green}
           points="275,125 280,115 285,125"
         />
-        <Circle color={blue} cx={`${tunerOutput.centGap + 50}%`} cy="60%" />
+        <Circle fill={blue} cx={`${tunerOutput.centGap + 50}%`} cy="60%" />
       </svg>
       <div className={frequency}>
         <span>{Math.round(tunerOutput.frequency)}</span>

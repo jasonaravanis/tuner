@@ -1,13 +1,19 @@
-import { Color } from "../../types";
 import React from "react";
+import { motion, SVGMotionProps } from "framer-motion";
 
-type Props = {
-  color: Color;
-} & React.SVGProps<SVGCircleElement>;
+type Props = SVGMotionProps<SVGCircleElement>;
 
 const Circle = (props: Props) => {
-  const { color } = props;
-  return <circle filter="url(#glow)" fill={color} r="1.5%" {...props} />;
+  return (
+    <motion.circle
+      animate={{ cx: props.cx as number }}
+      transition={{ ease: "linear" }}
+      filter="url(#glow)"
+      fill={props.fill}
+      r="1.5%"
+      {...props}
+    />
+  );
 };
 
 export { Circle };
