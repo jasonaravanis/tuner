@@ -3,7 +3,8 @@ import { blue, green, white } from "../../constants";
 
 export const buttonContainer = style({
   width: "min(20vh, 20vw)",
-  marginLeft: "10rem",
+  minWidth: "50px",
+  marginLeft: "10vw",
 });
 
 export const powerButton = style({

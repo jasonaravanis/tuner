@@ -12,4 +12,5 @@ export const container = style({
 
 export const mainScreen = style({
   width: "min(80vh, 80vw)",
+  minWidth: "150px",
 });
