@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { TunerView } from "../tuner-view";
 import { useFrequencySampler } from "../../hooks/use-frequency-sampler";
 

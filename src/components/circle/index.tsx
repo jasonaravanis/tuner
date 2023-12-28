@@ -1,4 +1,3 @@
-import React from "react";
 import { motion, SVGMotionProps } from "framer-motion";
 
 type Props = SVGMotionProps<SVGCircleElement>;
