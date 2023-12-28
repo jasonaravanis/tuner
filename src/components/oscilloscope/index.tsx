@@ -8,7 +8,7 @@ const CANVAS = {
 };
 
 // Playing some notes can cause waveform to clip off the canvas, so scale down to make it look nicer
-const SCALE_FACTOR = 0.3;
+const SCALE_FACTOR = 0.4;
 
 type Props = {
   analyser: AnalyserNode | null;
