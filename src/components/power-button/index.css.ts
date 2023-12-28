@@ -4,7 +4,13 @@ import { blue, green, white } from "../../constants";
 export const buttonContainer = style({
   width: "min(20vh, 20vw)",
   minWidth: "50px",
-  marginLeft: "10vw",
+  marginTop: "8rem",
+  "@media": {
+    "screen and (min-width: 768px)": {
+      marginLeft: "10vw",
+      marginTop: 0,
+    },
+  },
 });
 
 export const powerButton = style({

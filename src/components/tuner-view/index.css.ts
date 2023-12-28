@@ -5,9 +5,15 @@ export const container = style({
   width: "100%",
   height: "100%",
   display: "flex",
+  flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
   padding: "10rem",
+  "@media": {
+    "screen and (min-width: 768px)": {
+      flexDirection: "row",
+    },
+  },
 });
 
 export const mainScreen = style({
