@@ -1,5 +1,7 @@
 # Chromatic Tuner
 
+👉👉👉 [Try it here!](https://jasonaravanis.github.io/tuner/) 👈👈👈
+
 > A chromatic tuner that can identify the frequency of a sound, calculate the closest note, and show the shape of the sound wave using an oscilloscope 🌊
 
 <img src="https://github.com/jasonaravanis/tuner/blob/d47680646f2170863a5afaf16ccbacbe45ff9139/assets/readme-demo.gif" alt="A screen showing a sound wave, a frequency, and the closest musical note" width="400">
