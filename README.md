@@ -2,6 +2,8 @@
 
 > A chromatic tuner that can identify the frequency of a sound, calculate the closest note, and show visual feedback using an oscilloscope.
 
+<img src="https://github.com/jasonaravanis/tuner/blob/d47680646f2170863a5afaf16ccbacbe45ff9139/assets/readme-demo.gif" alt="A screen showing a sound wave, a frequency, and the closest musical note" width="300">
+
 ## How it works
 
 Using the AudioContext API, we can get sound data from the user's microphone. The form of this data is a stream of floats that range from negative to positive in a repeating pattern. This data is loaded into a buffer, where we can use (autocorrelation)[https://en.wikipedia.org/wiki/Autocorrelation] to figure out how often the pattern repeats each second (i.e, the frequency of the pitch). After that it's pretty simple to identify the closest musical note to that pitch (in MIDI terms), and the gap between the pitch and the closest note.
