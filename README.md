@@ -10,6 +10,8 @@
 
 Using the AudioContext API, we can get sound data from the user's microphone. The form of this data is a stream of floats that range from negative to positive in a repeating pattern. This data is loaded into a buffer, where we can use [autocorrelation](https://en.wikipedia.org/wiki/Autocorrelation) to figure out how often the pattern repeats each second (i.e, the frequency of the pitch). After that we can identify the closest musical note to that pitch (using MIDI), and the gap between the pitch and the closest note.
 
+The oscilloscope paints the float data onto a `<canvas />` to give a visual representation. The oscilloscope animation updates as fast as possible (depending on screen refresh rate).
+
 ## Tech stack
 
 ### Astro 🚀
