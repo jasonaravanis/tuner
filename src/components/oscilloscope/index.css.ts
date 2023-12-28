@@ -2,6 +2,6 @@ import { style } from "@vanilla-extract/css";
 
 export const element = style({
   position: "absolute",
-  top: "60%",
+  top: "70%",
   width: "100%",
 });
