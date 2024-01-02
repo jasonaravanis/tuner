@@ -31,7 +31,7 @@ const Oscilloscope = ({ analyser }: Props) => {
       if (!ctx) {
         throw new Error("Failed to get canvas context");
       }
-      const bufferLength = analyser.fftSize;
+      const bufferLength = analyser.frequencyBinCount;
       const buffer = new Float32Array(bufferLength);
 
       const generateAnimationFrame = () => {

@@ -27,7 +27,7 @@ const useFrequencySampler = ({ analyser }: Props): TunerOutput => {
     if (!analyser) {
       return;
     }
-    const bufferLength = analyser.fftSize;
+    const bufferLength = analyser.frequencyBinCount;
     const buffer = new Float32Array(bufferLength);
     analyser.getFloatTimeDomainData(buffer);
 
