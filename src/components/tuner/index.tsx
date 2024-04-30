@@ -19,7 +19,11 @@ export const Tuner = () => {
         );
       }
       const mediaStream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
+        audio: {
+          echoCancellation: false,
+          autoGainControl: false,
+          noiseSuppression: false,
+        },
       });
       const audioContext = new window.AudioContext();
       const source = audioContext.createMediaStreamSource(mediaStream);
@@ -50,14 +54,27 @@ export const Tuner = () => {
     }
   }, [error]);
 
+  const getAnalyserData = () => {
+    if (!analyser) {
+      return;
+    }
+    const bufferLength = analyser.frequencyBinCount;
+    const buffer = new Float32Array(bufferLength);
+    analyser.getFloatTimeDomainData(buffer);
+    console.log(buffer);
+  };
+
   return (
-    <TunerView
-      error={error}
-      isTunerOn={isTunerOn}
-      startTuner={startTuner}
-      stopTuner={stopTuner}
-      analyser={analyser}
-      tunerOutput={tunerOutput}
-    />
+    <>
+      <button onClick={getAnalyserData}>Get Data</button>
+      <TunerView
+        error={error}
+        isTunerOn={isTunerOn}
+        startTuner={startTuner}
+        stopTuner={stopTuner}
+        analyser={analyser}
+        tunerOutput={tunerOutput}
+      />
+    </>
   );
 };
