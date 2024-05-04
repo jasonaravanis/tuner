@@ -2,17 +2,20 @@
 
 export const autoCorrelate = (buffer: Float32Array, sampleRate: number) => {
   let SIZE = buffer.length;
-  let rms = 0;
 
+  // Identify strength of sound signal, if too quiet abort operation
+  let rootMeanSquare = 0;
   for (let i = 0; i < SIZE; i++) {
     let val = buffer[i];
-    rms += val * val;
+    rootMeanSquare += val * val;
   }
-  rms = Math.sqrt(rms / SIZE);
-  if (rms < 0.01)
+  rootMeanSquare = Math.sqrt(rootMeanSquare / SIZE);
+  if (rootMeanSquare < 0.01)
     // not enough signal
     return -1;
 
+  // walk up for r1, walk down for r2
+  // trim signal to only worry about relevent parts.
   let r1 = 0,
     r2 = SIZE - 1,
     thres = 0.2;
@@ -47,11 +50,5 @@ export const autoCorrelate = (buffer: Float32Array, sampleRate: number) => {
   }
   let T0 = maxpos;
 
-  let x1 = c[T0 - 1],
-    x2 = c[T0],
-    x3 = c[T0 + 1];
-  let a = (x1 + x3 - 2 * x2) / 2;
-  let b = (x3 - x1) / 2;
-  if (a) T0 = T0 - b / (2 * a);
   return sampleRate / T0;
 };
