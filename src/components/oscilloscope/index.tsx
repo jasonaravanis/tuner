@@ -8,7 +8,7 @@ const CANVAS = {
 };
 
 // Depending on volume of sound the oscilloscope wave can overflow allowed space on the canvase, adjust as needed
-const SCALE_FACTOR = 2;
+const SCALE_FACTOR = 3;
 
 type Props = {
   analyser: AnalyserNode | null;
