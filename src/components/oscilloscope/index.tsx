@@ -7,8 +7,8 @@ const CANVAS = {
   height: 200,
 };
 
-// Playing some notes can cause waveform to clip off the canvas, so scale down to make it look nicer
-const SCALE_FACTOR = 0.4;
+// Depending on volume of sound the oscilloscope wave can overflow allowed space on the canvase, adjust as needed
+const SCALE_FACTOR = 2;
 
 type Props = {
   analyser: AnalyserNode | null;
