@@ -2,6 +2,8 @@ import { useState, useCallback, useEffect } from "react";
 import { TunerView } from "../tuner-view";
 import { useFrequencySampler } from "../../hooks/use-frequency-sampler";
 
+const DEV_MODE = false;
+
 export const Tuner = () => {
   const [error, setError] = useState<string | null>(null);
   const [isTunerOn, setIsTunerOn] = useState(false);
@@ -59,14 +61,19 @@ export const Tuner = () => {
       return;
     }
     const bufferLength = analyser.frequencyBinCount;
-    const buffer = new Float32Array(bufferLength);
-    analyser.getFloatTimeDomainData(buffer);
+    const buffer = new Uint8Array(bufferLength);
+    analyser.getByteFrequencyData(buffer);
+    console.log("~~~Frequency Domain~~~");
     console.log(buffer);
+    const someBuffer = new Uint8Array(100);
+    analyser.getByteTimeDomainData(someBuffer);
+    console.log("~~~Time Domain~~~");
+    console.log(someBuffer);
   };
 
   return (
     <>
-      <button onClick={getAnalyserData}>Get Data</button>
+      {DEV_MODE && <button onClick={getAnalyserData}>Get Data</button>}
       <TunerView
         error={error}
         isTunerOn={isTunerOn}
