@@ -58,8 +58,7 @@ const useFrequencySampler = ({ analyser }: Props): TunerOutput => {
   };
 
   /*
-  analyser could populate the buffer up to 2048 times per second, but that is way faster than React could (or should) update the UI
-  So we limit to taking a snapshot every 100 ms which is a good balance between resource intensity and live updates.
+  Limit to taking a snapshot every 100 ms which is a good balance between resource intensity and live updates.
   */
   useInterval(analyseSound, analyser ? 100 : null);
 
